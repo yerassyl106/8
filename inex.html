@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="kk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8 Наурыз - Жұмбақтар</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #ffe6f2;
+            color: #d63384;
+            margin: 0;
+        }
+
+        .quiz-container {
+            width: 60%;
+            margin: auto;
+            background: #fff0f5;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            margin-top: 50px;
+            border: 3px solid #ff69b4;
+        }
+
+        h1 {
+            background: #ffb6c1;
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+            font-family: 'Cursive', sans-serif;
+        }
+
+        .question {
+            font-size: 20px;
+            margin: 20px 0;
+            background: #fff;
+            color: #d63384;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .answer-input {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 2px solid #ff69b4;
+            text-align: center;
+        }
+
+        .control-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .control-buttons button {
+            background: #ff69b4;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            border-radius: 20px;
+            margin: 5px;
+            color: white;
+        }
+
+        .control-buttons button:hover {
+            background: #ff1493;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quiz-container">
+        <h1>🌸 8 Наурыз құтты болсын! 🌸</h1>
+        <div id="score" class="score">Ұпай: 0</div>
+        <div class="question" id="question"></div>
+        <input type="text" id="answer" class="answer-input" placeholder="Жауабыңызды жазыңыз...">
+        <div class="control-buttons">
+            <button id="check">Тексеру</button>
+            <button id="next" style="display:none;">Келесі</button>
+        </div>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        const quizData = [
+        { question: "Қара мысық неге бөлмеден шыға алмайды, бірақ бүкіл есік ашық тұр?", answer: "Өйткені ол шыққысы келіп тұрған жоқ" },
+            { question: "Бір бөлмеде 3 шам жанып тұр, оның біреуін өшірсең қанша шам қалады?", answer: "3, өйткені олар әлі шам" },
+            { question: "Жаңбыр жауып тұр, адам бас киімсіз және зонтиксіз келе жатыр, бірақ оның шашы қалай су болмады?", answer: "Оның шашы жоқ" },
+            { question: "Үстелде 4 бұрыш бар, оның бір бұрышын кессең қанша бұрыш қалады?", answer: "5 бұрыш" },
+            { question: "Бір адам 100 жасқа толды, бірақ туған күні 25 рет қана болды. Қалай?", answer: "Оның туған күні 29 ақпанда" },
+            { question: "Түнгі сағат 9-да жаңбыр жауып тұр, егер 72 сағаттан кейін күн жарқырауы мүмкін бе?", answer: "Жоқ, өйткені қайтадан түн болады" },
+            { question: "Қандай зат әрдайым келеді, бірақ ешқашан жетпейді?", answer: "Ертең" },
+            { question: "Қандай зат сізді көрмейді, бірақ сіз оған қарайсыз?", answer: "Айна" },
+            { question: "Қандай зат бір ғана жолмен келіп, бір ғана жолмен кетеді, бірақ қайда екенін ешкім білмейді?", answer: "Уақыт" },
+            { question: "Жер бетінде әр адам оны көрген бірақ ешкім оны қайтадан көре алмайды.", answer: "Балалық шағы" },
+            { question: "Темір аяқты,Ағаш таяқты.", answer: "Циркуль мен қарындаш" },
+            { question: "Қандай зат қыста тоңбайды, жазда қызбайды?", answer: "Көлеңке" },
+            { question: "Қандай зат бір ғана жолмен келіп, бір ғана жолмен кетеді, бірақ қайда екенін ешкім білмейді?", answer: "Уақыт" },
+            { question: "Қандай зат әрдайым келеді, бірақ ешқашан жетпейді?", answer: "Ертең" }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        const questionEl = document.getElementById("question");
+        const answerEl = document.getElementById("answer");
+        const checkBtn = document.getElementById("check");
+        const nextBtn = document.getElementById("next");
+        const resultEl = document.getElementById("result");
+        const scoreEl = document.getElementById("score");
+
+        function normalizeText(text) {
+            return text.toLowerCase().replace(/[^a-zа-яё0-9]/gi, "").trim();
+        }
+
+        function loadQuestion() {
+            questionEl.textContent = quizData[currentQuestionIndex].question;
+            answerEl.value = "";
+            resultEl.textContent = "";
+            nextBtn.style.display = "none";
+            checkBtn.style.display = "block";
+        }
+
+        checkBtn.onclick = () => {
+            const userAnswer = normalizeText(answerEl.value);
+            const correctAnswer = normalizeText(quizData[currentQuestionIndex].answer);
+            
+            if (userAnswer === correctAnswer) {
+                resultEl.textContent = "Дұрыс!";
+                resultEl.style.color = "green";
+                score++;
+            } else {
+                resultEl.textContent = `Қате! Дұрыс жауап: ${quizData[currentQuestionIndex].answer}`;
+                resultEl.style.color = "red";
+            }
+            scoreEl.textContent = `Ұпай: ${score}`;
+            checkBtn.style.display = "none";
+            nextBtn.style.display = "block";
+        };
+
+        nextBtn.onclick = () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                questionEl.textContent = "Жұмбақтар аяқталды!";
+                answerEl.style.display = "none";
+                checkBtn.style.display = "none";
+                nextBtn.style.display = "none";
+                scoreEl.style.display = "none";
+                resultEl.textContent = `Барлық ұпайыңыз: ${score}`;
+                resultEl.style.color = "yellow";
+            }
+        };
+
+        loadQuestion();
+    </script>
+</body>
+
+</html>
