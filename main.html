@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Жұмбақтар</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .answer {
+            display: none;
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Жұмбақтар</h1>
+        <div class="riddles">
+            <div>
+                <p class="question">Қара мысық неге бөлмеден шыға алмайды, бірақ бүкіл есік ашық тұр?</p>
+                <p class="answer">Өйткені ол шыққысы келіп тұрған жоқ.</p>
+                <button onclick="toggleAnswer(this)">Жауабын көрсету</button>
+            </div>
+            <div>
+                <p class="question">Бір бөлмеде 3 шам жанып тұр, оның біреуін өшірсең қанша шам қалады?</p>
+                <p class="answer">3, өйткені олар әлі шам.</p>
+                <button onclick="toggleAnswer(this)">Жауабын көрсету</button>
+            </div>
+            <div>
+                <p class="question">Жаңбыр жауып тұр, адам бас киімсіз және зонтиксіз келе жатыр, бірақ оның шашы қалай су болмады?</p>
+                <p class="answer">Оның шашы жоқ.</p>
+                <button onclick="toggleAnswer(this)">Жауабын көрсету</button>
+            </div>
+            <div>
+                <p class="question">Үстелде 4 бұрыш бар, оның бір бұрышын кессең қанша бұрыш қалады?</p>
+                <p class="answer">5 бұрыш.</p>
+                <button onclick="toggleAnswer(this)">Жауабын көрсету</button>
+            </div>
+            <div>
+                <p class="question">Бір адам 100 жасқа толды, бірақ туған күні 25 рет қана болды. Қалай?</p>
+                <p class="answer">Оның туған күні 29 ақпанда.</p>
+                <button onclick="toggleAnswer(this)">Жауабын көрсету</button>
+            </div>
+            <div>
+                <p class="question">Түнгі сағат 9-да жаңбыр жауып тұр, егер 72 сағаттан кейін күн жарқырауы мүмкін бе?</p>
+                <p class="answer">Жоқ, өйткені қайтадан түн болады.</p>
+                <button onclick="toggleAnswer(this)">Жауабын көрсету</button>
+            </div>
+            <div>
+                <p class="question">Егер сізде бір ғана сіріңке болса және қараңғы бөлмеде шырағдан, керосин шамы және шам, пеш тұрса, алдымен қайсысын тұтатасыз?</p>
+                <p class="answer">Сіріңкені.</p>
+                <button onclick="toggleAnswer(this)">Жауабын көрсету</button>
+            </div>
+            <div>
+                <p class="question">Қандай зат әрдайым келеді, бірақ ешқашан жетпейді?</p>
+                <p class="answer">Ертең.</p>
+                <button onclick="toggleAnswer(this)">Жауабын көрсету</button>
+            </div>
+            <div>
+                <p class="question">Қандай зат сізді көрмейді, бірақ сіз оған қарайсыз?</p>
+                <p class="answer">Айна.</p>
+                <button onclick="toggleAnswer(this)">Жауабын көрсету</button>
+            </div>
+            <div>
+                <p class="question">Қандай зат бір ғана жолмен келіп, бір ғана жолмен кетеді, бірақ қайда екенін ешкім білмейді?</p>
+                <p class="answer">Уақыт.</p>
+                <button onclick="toggleAnswer(this)">Жауабын көрсету</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(button) {
+            var answer = button.previousElementSibling;
+            if (answer.style.display === "none" || answer.style.display === "") {
+                answer.style.display = "block";
+                button.textContent = "Жауабын жасыру";
+            } else {
+                answer.style.display = "none";
+                button.textContent = "Жауабын көрсету";
+            }
+        }
+    </script>
+</body>
+</html>
